@@ -1,0 +1,19 @@
+<table xmlns:th="http://www.w3.org/1999/xhtml">
+    <thead>
+    <tr>
+        <th> Order number </th>
+        <th> Order date </th>
+        <th> Status </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${orders.empty}">
+        <td colspan="3"> No orders Available </td>
+    </tr>
+    <tr th:each="orderResponseDto : ${orders}">
+        <td><span th:text="${orderResponseDto.id}"> Order number </span></td>
+        <td><span th:text="${orderResponseDto.orderDate}"> Order date </span></td>
+        <td><span th:text="${orderResponseDto.status}"> Status </span></td>
+    </tr>
+    </tbody>
+</table>

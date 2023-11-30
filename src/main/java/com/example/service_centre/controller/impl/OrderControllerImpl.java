@@ -1,45 +1,45 @@
 package com.example.service_centre.controller.impl;
 
 import com.example.service_centre.controller.OrderController;
-import com.example.service_centre.entity.Order;
+import com.example.service_centre.dto.OrderResponseDto;
 import com.example.service_centre.service.OrderService;
-import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@RestController
-@RequestMapping("/api/orders")
-@RequiredArgsConstructor
+import java.util.List;
+
+@Controller
 public class OrderControllerImpl implements OrderController {
 
     private final OrderService orderService;
 
+    public OrderControllerImpl(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
-    @GetMapping("/all")
-    public String listOrders(@PathVariable Model model){
-        model.addAttribute("orders",orderService.listAllOrder());
+    @GetMapping("/orders")
+    public String getOrderList(Model model) {
+        List<OrderResponseDto> orders = orderService.getAllOrders();
+        model.addAttribute("orders", orders);
         return "orders";
     }
 
-    @PostMapping
-    public Order createOrder(@RequestBody Order order) {
-        return orderService.createOrder(order);
+    @GetMapping("/orderManagement")
+    public String showOrderManagementPage() {
+        return "orderManagement";
     }
 
-    @PutMapping("/{id}")
-    public Order updateOrder(@PathVariable Long id, @RequestBody Order order) {
-        return orderService.updateOrder(id, order);
+    @GetMapping("/search-order")
+    public String getOrder(@RequestParam("id") Long id, Model model) {
+        OrderResponseDto order = orderService.getOrder(id);
+        model.addAttribute("order", order);
+        return "orderDetails";
     }
-
-    @GetMapping()
-    public Order getOrder(@PathVariable Long id){
-        return orderService.getOrder(id);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteOrder(@PathVariable Long id) {
-        orderService.deleteOrder(id);
+    @GetMapping("/searchOrder")
+    public String search() {
+        return "searchOrder";
     }
 }
 

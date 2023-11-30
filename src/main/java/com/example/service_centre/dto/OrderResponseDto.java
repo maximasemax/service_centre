@@ -6,9 +6,9 @@ import lombok.Builder;
 public class OrderResponseDto {
 
 
-    private Long id;
+    public Long id;
 
-    private String orderDate;
+    public String orderDate;
 
-    private String status;
+    public String status;
 }

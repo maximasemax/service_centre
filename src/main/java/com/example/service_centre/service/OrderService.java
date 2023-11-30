@@ -16,7 +16,7 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    public  List<OrderResponseDto> listAllOrder(){
+    public  List<OrderResponseDto> getAllOrders(){
         orderRepository.findAll();
         List<Order> orderList = new ArrayList<>(orderRepository.findAll());
         List<OrderResponseDto> orderResponseDtoList = new ArrayList<>();
@@ -31,8 +31,15 @@ public class OrderService {
         }
         return orderResponseDtoList;
     }
-    public Order getOrder(Long id) {
-        return orderRepository.findById(id).orElseThrow(() ->new CustomOrderException("Order not found"));
+
+    public OrderResponseDto getOrder(Long id) {
+        Order order = orderRepository.findById(id).orElseThrow(() ->new CustomOrderException("Order not found"));
+        OrderResponseDto orderResponseDto = OrderResponseDto.builder()
+                .id(order.getId())
+                .orderDate(order.getOrderDate())
+                .status(order.getStatus())
+                .build();
+        return orderResponseDto;
     }
 
     public Order createOrder(Order order) {

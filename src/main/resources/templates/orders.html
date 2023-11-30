@@ -1,19 +1,48 @@
-<table xmlns:th="http://www.w3.org/1999/xhtml">
-    <thead>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Orders</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f6f6f6;
+            font-family: Arial, sans-serif;
+        }
+        table {
+            border-collapse: collapse;
+            width: 60%;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<table>
     <tr>
-        <th> Order number </th>
-        <th> Order date </th>
-        <th> Status </th>
+        <th>Number of order</th>
+        <th>Order Date</th>
+        <th>Status</th>
     </tr>
-    </thead>
-    <tbody>
-    <tr th:if="${orders.empty}">
-        <td colspan="3"> No orders Available </td>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.id}"></td>
+        <td th:text="${order.orderDate}"></td>
+        <td th:text="${order.status}"></td>
     </tr>
-    <tr th:each="orderResponseDto : ${orders}">
-        <td><span th:text="${orderResponseDto.id}"> Order number </span></td>
-        <td><span th:text="${orderResponseDto.orderDate}"> Order date </span></td>
-        <td><span th:text="${orderResponseDto.status}"> Status </span></td>
-    </tr>
-    </tbody>
 </table>
+</body>
+</html>
+
+
